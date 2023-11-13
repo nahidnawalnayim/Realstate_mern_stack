@@ -7,13 +7,14 @@ import store from './app/store.js'
 import {ApiProvider} from '@reduxjs/toolkit/query/react'
 import { apiSlice } from './app/apiSlice.js'
 import { BrowserRouter } from 'react-router-dom'
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Provider store={store}>
+   <Provider store={store}>
+      <ApiProvider api={apiSlice} >
         <BrowserRouter>
         <App />      
         </BrowserRouter>
+      </ApiProvider>
     </Provider>
   </React.StrictMode>,
 )

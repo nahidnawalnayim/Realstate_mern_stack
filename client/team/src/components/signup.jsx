@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { useRegisterMutation } from '../app/loginSlice'
 import { useDispatch } from 'react-redux';
-//import { addUser } from '../app/authSlice';
+import { addUser } from '../app/authSlice';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { setCredentials } from '../app/authCredential';
 
 const Signup = () => {
   const [register] = useRegisterMutation();
@@ -17,10 +16,10 @@ const Signup = () => {
     e.preventDefault()
     try {
       const res = await register({ name, email, password }).unwrap();
-      dispatch(setCredentials({ ...res }));
+      dispatch(addUser({ ...res }));
       setRedirect(true);
       if (res.message === "new user created.") {
-        navigate('/login');
+        navigate('/');
       }
       console.log(res.message);
     } catch (e) {

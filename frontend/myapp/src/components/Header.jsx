@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import { useGetUserQuery } from '../app/loginSlice';
 
 const Header = () => {
-  const {userInfo} =useSelector((state)=> state.auth)
-  console.log(userInfo);
+  const {user} =useSelector((state)=> state.user)
+  console.log(user);
   return (
     <>
          <header className="bg-slate-200 shadow-md">
@@ -29,13 +29,9 @@ const Header = () => {
             <li className='hidden sm:inline'>Home</li>
             </Link>
             <li className='hidden sm:inline'>About</li>
-          
+           
             <Link to={'/login'}>
-            {
-              userInfo ? (<Link to={'/profile'}>{<li>{userInfo.email}</li>}</Link>): (<li>Sign In</li>
-              )
-            }
-              
+            <li>Sign In</li>
             </Link>
 
           </ul>

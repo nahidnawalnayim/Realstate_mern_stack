@@ -25,14 +25,18 @@ const loginController=async(req,res,next)=>{
   const {email, password}=req.body;
   try{
     let token=await loginService({email,password});
-    return res.status(201).json({message: "Login success!!"});
+    return res.status(200).json(token);
   }catch(e){
     next(e);
   }
 }
 
 const logout=async(req,res)=>{
-  res.cookie('token', '').json({message: "Logged out successfully."})
+  res.cookie('token', '',{
+    httpOnly: true,
+    expires: new Date(0)
+  } );
+  res.status(200).json({message: 'Logged out'});
 }
 
 module.exports = {registerController, loginController, logout};

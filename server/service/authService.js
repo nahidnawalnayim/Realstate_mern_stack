@@ -1,6 +1,7 @@
 const bcrypt= require('bcrypt');
 const jwt = require('jsonwebtoken')
-const {createUser,findUserbyProp}= require('./userService')
+const {createUser,findUserbyProp}= require('./userService');
+const User = require('../model/userModel');
 const registerService=async ({name,email,password})=>{
     const user= await findUserbyProp("email", email);
     if(user){
@@ -12,13 +13,24 @@ const registerService=async ({name,email,password})=>{
 }
 
 const loginService=async({email,password})=>{
-    let user=await findUserbyProp("email", email);
-     if(!user){
-        throw Error("User not found!!");
-     }
-     const isMatched=await bcrypt.compare(password,user.password);
-     if(!isMatched){
-        throw Error("Invalid Credentials !!");
-     }
+    let user = await findUserbyProp("email", email);
+  if (!user) {
+    throw Error("user not found.");
+  }
+  /**
+   * Comparing password from req.body with user.password in database
+   */
+  const ismatched = bcrypt.compare(password, user.password);
+  if (!ismatched) {
+    throw Error("Invalid credentials!!");
+  }
+  const payload = {
+    _id:user._id,
+    email: user.email,
+    password: user.password,
+    // accountStatus:user.accountStatus
+  };
+ jwt.sign(payload, "secret-key", { expiresIn: "2h" });
+ return payload;
 }
 module.exports={registerService,loginService};
