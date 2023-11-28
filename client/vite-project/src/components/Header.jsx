@@ -8,7 +8,7 @@ const Header = () => {
   const {userInfo} =useSelector((state)=> state.auth)
   console.log(userInfo);
   return (
-    <>
+    <> 
          <header className="bg-slate-200 shadow-md">
         <div className='flex justify-between items-center mx-auto sm:mx-16 p-3 h-16 '>
           <h1 className='flex flex-wrap font-bold font-serif text-sm sm:text-xl'>

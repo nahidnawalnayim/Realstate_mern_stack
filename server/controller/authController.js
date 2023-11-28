@@ -1,6 +1,7 @@
 const {registerService,loginService} = require("../service/authService");
 const User = require("../model/userModel");
 const bcrypt = require("bcrypt");
+const { findUserbyProp } = require("../service/userService");
 const registerController = async (req, res, next) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
@@ -28,6 +29,7 @@ const loginController=async(req,res,next)=>{
     return res.status(200).json(token);
   }catch(e){
     next(e);
+    
   }
 }
 

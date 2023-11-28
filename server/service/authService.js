@@ -20,7 +20,7 @@ const loginService=async({email,password})=>{
   /**
    * Comparing password from req.body with user.password in database
    */
-  const ismatched = bcrypt.compare(password, user.password);
+  const ismatched =await bcrypt.compare(password, user.password);
   if (!ismatched) {
     throw Error("Invalid credentials!!");
   }

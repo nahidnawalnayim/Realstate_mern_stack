@@ -5,13 +5,14 @@ import { useLoginMutation, useRegisterMutation } from '../app/loginSlice';
 import { Navigate, useNavigate } from 'react-router-dom';
 //import { loginStart, loginSuccess } from '../app/useLogin';
 import { setCredentials } from '../app/authCredential';
+import { toast } from 'react-toastify';
 const Login = () => {
   const [login]= useLoginMutation();
   const [email,setEmail]=useState('');
   const [password, setPassword] = useState('');
   const dispatch=useDispatch();
   const {userInfo}= useSelector((state)=>state.auth)
- 
+ console.log(userInfo);
   const navigate = useNavigate()
   
   const handleSubmit=async(e)=>{
@@ -20,9 +21,9 @@ const Login = () => {
       const res=await login({email,password}).unwrap();
       dispatch(setCredentials({...res}));
       navigate('/');
-      
+      toast.success(`Welcome. Successfully logged in`)
     }catch(e){
-      console.log(e);
+      toast.error('Invalid credential!!!');
     }
    
   }
